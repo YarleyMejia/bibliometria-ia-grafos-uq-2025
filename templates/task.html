@@ -1,0 +1,43 @@
+<!-- templates/task.html -->
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Tarea {{ task_id }}</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 18px; }
+      pre { background:#111; color:#bfb; padding:12px; border-radius:6px; overflow:auto; max-height:300px; }
+      .file { margin:6px 0; }
+      img { max-width: 480px; display:block; margin:8px 0; }
+    </style>
+  </head>
+  <body>
+    <a href="/">← Volver</a>
+    <h1>Tarea {{ task_id }}</h1>
+
+    <section>
+      <h3>Log (últimas líneas)</h3>
+      <pre>{{ log }}</pre>
+      <a href="/api/logs/{{ task_id }}">Descargar log completo</a>
+    </section>
+
+    <section>
+      <h3>Archivos generados</h3>
+      {% if files %}
+        <ul>
+          {% for f in files %}
+            <li class="file">
+              <a href="/download/{{ task_id }}/{{ f.relative_to(task_id) if false else f.name }}">{{ f.name }}</a>
+              {% if f.suffix.lower() in ['.png', '.jpg', '.jpeg', '.gif'] %}
+                <br/>
+                <img src="/download/{{ task_id }}/{{ f.relative_to(task_id) if false else f.name }}" alt="{{ f.name }}" />
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No se han generado archivos aún.</p>
+      {% endif %}
+    </section>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+<!-- templates/index.html -->
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Mini Job Runner UI</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 24px; }
+      .card { border: 1px solid #ddd; padding: 12px; margin: 8px 0; border-radius: 6px; }
+      .task-list { margin-top: 18px; }
+      button { padding: 8px 12px; }
+      input[type="text"] { width: 300px; }
+    </style>
+  </head>
+  <body>
+    <h1>Mini Job Runner — Interfaz</h1>
+
+    <div class="card">
+      <h3>Ejecutar script</h3>
+      <form method="post" action="/run">
+        <label>Selecciona script:
+          <select name="script">
+            {% for key, fn in scripts.items() %}
+              <option value="{{ key }}">{{ key }} — {{ fn }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <br/><br/>
+        <label>Argumentos (opcional, separados por espacio):<br/>
+          <input type="text" name="args" placeholder="ej: --param1 valor1" />
+        </label>
+        <br/><br/>
+        <button type="submit">Ejecutar</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3>Tareas recientes</h3>
+      <div class="task-list">
+        {% if tasks %}
+          <ul>
+            {% for t in tasks %}
+              <li>
+                <b>{{ t.id }}</b> — {{ t.mtime }} —
+                <a href="/task/{{ t.id }}">ver</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>No hay tareas todavía.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <footer style="margin-top:36px; font-size: 0.9em; color:#666;">
+      <div>Los archivos de entrada deben estar en la raíz del proyecto según las rutas definidas en los scripts (ej. datos/salidas/...)</div>
+      <div>Resultados y logs se guardan en la carpeta montada (OUT_BASE, por defecto /data)</div>
+    </footer>
+  </body>
+</html>

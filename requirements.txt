@@ -2,3 +2,6 @@ selenium>=4.25
 pandas>=2.0
 fastapi
 uvicorn
+jinja2
+python-multipart
+pydantic
