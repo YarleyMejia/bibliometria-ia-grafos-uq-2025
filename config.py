@@ -7,7 +7,7 @@ from pathlib import Path
 # === 1. DETECTAR SISTEMA OPERATIVO ===
 SO = platform.system()
 
-# === 2. DEFINIR RUTA BASE DEL PROYECTO ===
+# === 2.  DEFINIR RUTA BASE DEL PROYECTO ===
 if SO == "Windows":
     # 🧩 Ruta base del proyecto (ajustar según el usuario en Windows)
     BASE_DIR = Path(
